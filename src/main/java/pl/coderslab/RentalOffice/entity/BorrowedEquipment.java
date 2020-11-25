@@ -8,18 +8,17 @@ public class BorrowedEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    int price;
     @OneToOne
     private Equipment equipment;
-    @NotNull
-    int price;
 
     public BorrowedEquipment(){
-
     }
-    public BorrowedEquipment(Long id, Equipment equipment, int price) {
+    public BorrowedEquipment(Long id, int price, Equipment equipment) {
         this.id = id;
-        this.equipment = equipment;
         this.price = price;
+        this.equipment = equipment;
     }
 
     public Long getId() {
@@ -40,9 +39,5 @@ public class BorrowedEquipment {
 
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

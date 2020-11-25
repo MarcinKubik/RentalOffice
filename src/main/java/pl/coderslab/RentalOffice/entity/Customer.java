@@ -23,7 +23,7 @@ public class Customer {
     private String email;
     @NotNull
     @Pattern(regexp = "[0-9]{9}")
-    private int phoneNumber;
+    private String phoneNumber;
     @OneToMany(mappedBy = "customer")
     private List<Contract> contracts = new ArrayList<>();
     @NotNull
@@ -33,14 +33,14 @@ public class Customer {
     @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
     private String street;
     @NotNull
-    @Pattern(regexp = "\\d+")
-    private int number;
+    @Pattern(regexp = "\\d+", message = "error")
+    private String number;
 
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String surname, String email, int phoneNumber, List<Contract> contracts, String city, String street, int number) {
+    public Customer(Long id, String name, String surname, String email, String phoneNumber, List<Contract> contracts, String city, String street, String number) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -84,11 +84,11 @@ public class Customer {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -116,11 +116,11 @@ public class Customer {
         this.street = street;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 }

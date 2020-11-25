@@ -25,6 +25,8 @@ public class Employee {
     @NotNull
     @Pattern(regexp = "\\S{8,}")
     private String password;
+    @NotNull
+    private boolean isLogged;
     @OneToMany(mappedBy = "employee")
     private List<Contract> contracts = new ArrayList<>();
 
@@ -34,12 +36,13 @@ public class Employee {
 //public Employee(Long id, @NotNull @Pattern(regexp = "[A-Z]{1}[a-z]{2,}") String name, @NotNull @Pattern(regexp = "[A-Z]{1}[a-z]{2,}") String surname,
 // @NotNull String login, @NotNull @Pattern(regexp = "\\S{8,}") String password, List<Contract> contracts) {
     // sprawdzić czy to jest poprawne
-    public Employee(Long id, String name, String surname, String login, String password, List<Contract> contracts) {
+    public Employee(Long id, String name, String surname, String login, String password, boolean isLogged, List<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
+        this.isLogged = isLogged;
         this.contracts = contracts;
     }
 
@@ -81,6 +84,14 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLogged() {
+        return isLogged;
+    }
+
+    public void setLogged(boolean logged) {
+        isLogged = logged;
     }
 
     public List<Contract> getContracts() {
