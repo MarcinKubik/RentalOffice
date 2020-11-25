@@ -14,10 +14,10 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String name;
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String surname;
     @NotNull
     @Column(unique = true)
@@ -100,5 +100,9 @@ public class Employee {
 
     public void setContracts(List<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public String getFullName(){
+        return name + " " + surname;
     }
 }

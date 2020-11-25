@@ -19,13 +19,12 @@ public class Equipment {
     private String name;
     @NotNull
     @Pattern(regexp = "\\d+")
-    private int value;
+    private String value;
     @NotBlank
     @Size(min = 20)
     private String description;
     @NotNull
     private String producent;
-    private LocalDateTime borrowedTo;
     @OneToOne
     private CatalogPrice catalogPrice;
 
@@ -33,12 +32,12 @@ public class Equipment {
 
     }
 
-    public Equipment(Long id, String name, int value, String description, String producent, LocalDateTime borrowedTo, CatalogPrice catalogPrice) {
+    public Equipment(Long id, String name, String value, String description, String producent, CatalogPrice catalogPrice) {
         this.id = id;
         this.name = name;
         this.value = value;
         this.description = description;
-        this.borrowedTo = borrowedTo;
+        this.producent = producent;
         this.catalogPrice = catalogPrice;
     }
 
@@ -51,16 +50,12 @@ public class Equipment {
     }
 
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public LocalDateTime getBorrowedTo() {
-        return borrowedTo;
     }
 
     public CatalogPrice getCatalogPrice() {

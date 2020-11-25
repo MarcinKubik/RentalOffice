@@ -33,7 +33,7 @@ public class ContractController {
 
     //dodaję pracownika do umowy
     @ModelAttribute("employee")
-    public Employee employee(){
+    public List<Employee> employee(){
         return employeeService.findLogged();
     }
 
@@ -57,4 +57,12 @@ public class ContractController {
             return "index";
         }
     }
+
+    @GetMapping("/list")
+    public String list(Model model){
+        List<Contract> contracts = contractService.getContracts();
+        model.addAttribute("contracts", contracts);
+        return "contract/list";
+    }
+
 }

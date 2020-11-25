@@ -13,10 +13,11 @@
 <body>
 <p><a href="/aaa">OFERTA</a></p>
 <p><a href="">SPRZĘT WYPOŻYCZONY</a></p>
-<p><a href="">UMOWY</a></p>
+<p><a href="/contract/list">UMOWY</a></p>
 <p><a href="">KALENDARZ</a></p>
 <p><a href="">KONTAKT Z KLIENTEM</a></p>
 <p><a href="/customer/form">DODAJ KLIENTA</a></p>
 <p><a href="/contract/form">DODAJ UMOWĘ</a></p>
+<p><a href="">DODAJ SPRZĘT</a></p>
 </body>
 </html>

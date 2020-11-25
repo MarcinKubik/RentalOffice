@@ -20,10 +20,12 @@
     <form:input path="contractNumber"/>
     <form:errors path="contractNumber" cssClass="error"/><br>
 
-    <form:hidden path="employee" items="${employee}"/>
+    <form:label path="employee">Pracownik</form:label>
+    <form:select path="employee" items="${employee}" itemLabel="fullName" itemValue="id"/>
+    <form:errors path="employee" cssClass="error"/><br>
 
     <form:label path="customer">Klient:</form:label>
-    <form:select path="customer" items="${customers}" itemLabel="surname" itemValue="id" />
+    <form:select path="customer" items="${customers}" itemLabel="fullName" itemValue="id" />
     <form:errors path="customer" cssClass="error"/><br>
     <button type="submit">Wyślij</button>
 </form:form>

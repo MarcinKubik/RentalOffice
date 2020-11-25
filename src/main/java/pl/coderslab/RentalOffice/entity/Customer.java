@@ -14,10 +14,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String name;
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String surname;
     @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}")
     private String email;
@@ -27,10 +27,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Contract> contracts = new ArrayList<>();
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String city;
     @NotNull
-    @Pattern(regexp = "[A-Z]{1}[a-z]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
     private String street;
     @NotNull
     @Pattern(regexp = "\\d+", message = "error")
@@ -122,5 +122,9 @@ public class Customer {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getFullName(){
+        return name + " " + surname;
     }
 }

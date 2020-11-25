@@ -2,22 +2,27 @@ package pl.coderslab.RentalOffice.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
 
 @Entity
 public class BorrowedEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    int price;
+    @NotNull
+    @Pattern(regexp = "\\d+")
+    private String price;
+    private LocalDateTime borrowedTo;
     @OneToOne
     private Equipment equipment;
 
     public BorrowedEquipment(){
     }
-    public BorrowedEquipment(Long id, int price, Equipment equipment) {
+    public BorrowedEquipment(Long id, String price, LocalDateTime borrowedTo, Equipment equipment) {
         this.id = id;
         this.price = price;
+        this.borrowedTo = borrowedTo;
         this.equipment = equipment;
     }
 
@@ -37,7 +42,19 @@ public class BorrowedEquipment {
         this.equipment = equipment;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getBorrowedTo() {
+        return borrowedTo;
+    }
+
+    public void setBorrowedTo(LocalDateTime borrowedTo) {
+        this.borrowedTo = borrowedTo;
     }
 }

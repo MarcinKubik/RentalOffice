@@ -37,7 +37,7 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
-    public Employee findLogged(){
+    public List<Employee> findLogged(){
         return employeeRepository.findLogged();
     }
 }
