@@ -18,7 +18,8 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController {
+public class
+CustomerController {
 
     private final CustomerService customerService;
     public CustomerController(CustomerService customerService){
@@ -37,7 +38,6 @@ public class CustomerController {
             return "customer/form";
         }else{
             customerService.add(customer);
-               // model.addAttribute("customerForContract", customer);  // już niepotrzebne
                 return "index";
         }
     }

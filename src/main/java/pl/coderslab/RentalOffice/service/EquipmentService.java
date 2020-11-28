@@ -22,8 +22,23 @@ public class EquipmentService {
         equipmentRepository.save(equipment);
     }
 
+    public void update(Equipment equipment){
+        equipmentRepository.save(equipment);
+    }
+
     public void delete(Long id){
         equipmentRepository.deleteById(id);
     }
 
+    public Equipment findLastAdded(){
+        return equipmentRepository.findFirstByOrderByIdDesc();
+    }
+
+    public List<Equipment> getBorrowedEquipment(){
+        return equipmentRepository.findAllBorrowed();
+    }
+
+    public List<Equipment> getAvailableEquipment(){
+        return equipmentRepository.findAllAvailable();
+    }
 }

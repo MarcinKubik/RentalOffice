@@ -35,4 +35,8 @@ public class ContractService {
     public void update(Contract contract){
         contractRepository.save(contract);
     }
+
+    public Contract findLastAdded(){
+        return contractRepository.findFirstByOrderByIdDesc();
+    }
 }

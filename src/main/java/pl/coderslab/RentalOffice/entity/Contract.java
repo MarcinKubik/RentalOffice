@@ -24,9 +24,9 @@ public class Contract {
     @ManyToOne
     private Customer customer;
     @OneToMany
+    @JoinColumn(name = "id_contract")
     private List<BorrowedEquipment> borrowedEquipmentList = new ArrayList<>();
-   /* @OneToOne
-    private BorrowDetails borrowDetails;*/
+
 
 
     public Contract(){

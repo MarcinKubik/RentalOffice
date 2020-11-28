@@ -16,6 +16,7 @@
 <form:form modelAttribute="contract"  method="post" action="/contract/form">
     <form:hidden path="id"/>
 
+
     <form:label path="contractNumber">Numer umowy:</form:label>
     <form:input path="contractNumber"/>
     <form:errors path="contractNumber" cssClass="error"/><br>

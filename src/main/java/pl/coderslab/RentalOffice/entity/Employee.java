@@ -14,10 +14,10 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁ]{1}[a-zóżźćąęł]{2,}")
     private String name;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆ]{1}[a-zóżźćąę]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
     private String surname;
     @NotNull
     @Column(unique = true)

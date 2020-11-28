@@ -11,13 +11,14 @@
     <title>STRONA STARTOWA WYPOŻYCZALNI</title>
 </head>
 <body>
-<p><a href="/aaa">OFERTA</a></p>
-<p><a href="">SPRZĘT WYPOŻYCZONY</a></p>
+<p><a href="/equipment/list">OFERTA</a></p>
+<p><a href="/equipment/borrowedList">SPRZĘT WYPOŻYCZONY</a></p>
 <p><a href="/contract/list">UMOWY</a></p>
 <p><a href="">KALENDARZ</a></p>
 <p><a href="">KONTAKT Z KLIENTEM</a></p>
 <p><a href="/customer/form">DODAJ KLIENTA</a></p>
 <p><a href="/contract/form">DODAJ UMOWĘ</a></p>
-<p><a href="">DODAJ SPRZĘT</a></p>
+<p><a href="/equipment/form">DODAJ SPRZĘT</a></p>
+<p><a href="/customer/list">KLIENCI</a> </p>
 </body>
 </html>

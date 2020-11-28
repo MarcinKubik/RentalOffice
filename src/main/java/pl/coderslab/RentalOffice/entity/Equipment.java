@@ -1,20 +1,20 @@
 package pl.coderslab.RentalOffice.entity;
 
 import org.hibernate.annotations.Immutable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Immutable
 @Table(name = "equipment")
 public class Equipment {
     // wszystkie pola private final, bez setterów klasa immutable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @NotNull(message = "not null")
     @Size(min = 3)
     private String name;
     @NotNull
@@ -24,7 +24,9 @@ public class Equipment {
     @Size(min = 20)
     private String description;
     @NotNull
+    @Size(min = 2)
     private String producent;
+    private boolean available;
     @OneToOne
     private CatalogPrice catalogPrice;
 
@@ -64,5 +66,37 @@ public class Equipment {
 
     public String getProducent() {
         return producent;
+    }
+
+    public boolean getAvailable(){
+         return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public void setCatalogPrice(CatalogPrice catalogPrice) {
+        this.catalogPrice = catalogPrice;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setProducent(String producent) {
+        this.producent = producent;
     }
 }
