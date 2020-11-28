@@ -22,12 +22,13 @@
     <form:input path="name"/>
     <form:errors path="name" cssClass="error"/><br>
 
+
     <form:label path="value">Wartość</form:label>
     <form:input path="value"/>
     <form:errors path="value" cssClass="error"/><br>
 
     <form:label path="description">Opis</form:label>
-    <form:input path="description"/>
+    <form:input  path="description"/>
     <form:errors path="description" cssClass="error"/><br>
 
     <form:label path="producent">Producent</form:label>

@@ -1,5 +1,7 @@
 package pl.coderslab.RentalOffice.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,6 +15,8 @@ public class BorrowedEquipment {
     @NotNull
     @Pattern(regexp = "\\d+")
     private String price;
+    @NotNull(message = "Nie może być null")
+    private String borrowedToString;
     private LocalDateTime borrowedTo;
     @OneToOne
     private Equipment equipment;
@@ -56,5 +60,13 @@ public class BorrowedEquipment {
 
     public void setBorrowedTo(LocalDateTime borrowedTo) {
         this.borrowedTo = borrowedTo;
+    }
+
+    public String getBorrowedToString() {
+        return borrowedToString;
+    }
+
+    public void setBorrowedToString(String borrowedToString) {
+        this.borrowedToString = borrowedToString;
     }
 }

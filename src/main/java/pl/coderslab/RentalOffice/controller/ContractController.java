@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.RentalOffice.entity.*;
 import pl.coderslab.RentalOffice.repository.ContractRepository;
-import pl.coderslab.RentalOffice.service.ContractService;
-import pl.coderslab.RentalOffice.service.CustomerService;
-import pl.coderslab.RentalOffice.service.EmployeeService;
-import pl.coderslab.RentalOffice.service.EquipmentService;
+import pl.coderslab.RentalOffice.service.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -25,12 +28,15 @@ public class ContractController {
     private final EmployeeService employeeService;
     private final CustomerService customerService;
     private final EquipmentService equipmentService;
+    private final BorrowedEquipmentService borrowedEquipmentService;
     public ContractController(ContractService contractService, EmployeeService employeeService,
-                              CustomerService customerService, EquipmentService equipmentService){
+                              CustomerService customerService, EquipmentService equipmentService,
+                              BorrowedEquipmentService borrowedEquipmentService){
         this.contractService = contractService;
         this.employeeService = employeeService;
         this.customerService = customerService;
         this.equipmentService = equipmentService;
+        this.borrowedEquipmentService = borrowedEquipmentService;
     }
 
     //dodaję pracownika do umowy
@@ -67,13 +73,21 @@ public class ContractController {
     }
 
     @PostMapping("/addEquipment")
-    public String addEquipment(@Valid BorrowedEquipment borrowedEquipment, BindingResult bindingResult, Model model){
+    public String addEquipment(@Valid BorrowedEquipment borrowedEquipment, BindingResult bindingResult, Model model) throws ParseException {
         if (bindingResult.hasErrors()){
             return "borrowedEquipment/form";
         }else {
-            //dodać serwis
+            //ustawić właściwie price, zmieniać available wypożyczonego sprzętu na false
+            //price może być nullem - encja
+            LocalDateTime localDateTime = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
+            localDateTime = localDateTime.plusHours(1);
+            borrowedEquipment.setBorrowedTo(localDateTime);
+
+
+            borrowedEquipmentService.add(borrowedEquipment);
             Contract contract = contractService.findLastAdded();
-            //contract.getBorrowedEquipmentList().add()
+            contract.getBorrowedEquipmentList().add(borrowedEquipment);
+            contractService.update(contract);
             return "index";
         }
     }
