@@ -122,8 +122,9 @@ public class ContractController {
 
     @GetMapping("/borrowedEquipment/{id}")
     public String borrowedEquipmentForContract(@PathVariable Long id, Model model){
-        //List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.
-        return "index";
+        List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.equipmentForContract(id);
+        model.addAttribute("borrowedEquipmentList", borrowedEquipmentList);
+        return "borrowedEquipment/list";
     }
 
 }

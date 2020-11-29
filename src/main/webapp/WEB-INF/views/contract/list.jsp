@@ -18,7 +18,7 @@
     <td>Należność</td>
     <td>Pracownik</td>
     <td>Klient</td>
-    <td>Lista wypożyczonych przedmiotów</td>
+    <td>Szczegóły umowy</td>
 </thead>
     <tbody>
     <c:forEach items="${contracts}" var="contract">
@@ -27,7 +27,7 @@
         <td>${contract.profit}</td>
         <td>${contract.employee.fullName}</td>
         <td>${contract.customer.fullName}</td>
-        <td><a href="contract/borrowedEquipment/${contract.id}">Przedmioty dla tej umowy</a></td>
+        <td><a href="/contract/borrowedEquipment/${contract.id}">Szczegóły umowy</a></td>
         </tr>
     </c:forEach>
     </tbody>

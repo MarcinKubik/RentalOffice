@@ -20,6 +20,10 @@ public class BorrowedEquipmentService {
         return borrowedEquipmentRepository.findAll();
     }
 
+    public List<BorrowedEquipment> equipmentForContract(Long id){
+        return borrowedEquipmentRepository.equipmentForContract(id);
+    }
+
     public Optional<BorrowedEquipment> get(Long id){
         Optional<BorrowedEquipment> optionalBorrowedEquipment = borrowedEquipmentRepository.findById(id);
         return  optionalBorrowedEquipment;
