@@ -12,10 +12,12 @@ public class BorrowedEquipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @NotNull
+    private int price;
+    /*@NotNull
     @Pattern(regexp = "\\d+")
-    private String price;
+    private String price;*/
     @NotNull(message = "Nie może być null")
+    @Transient
     private String borrowedToString;
     private LocalDateTime borrowedTo;
     @OneToOne
@@ -23,7 +25,7 @@ public class BorrowedEquipment {
 
     public BorrowedEquipment(){
     }
-    public BorrowedEquipment(Long id, String price, LocalDateTime borrowedTo, Equipment equipment) {
+    public BorrowedEquipment(Long id, int price, LocalDateTime borrowedTo, Equipment equipment) {
         this.id = id;
         this.price = price;
         this.borrowedTo = borrowedTo;
@@ -46,11 +48,11 @@ public class BorrowedEquipment {
         this.equipment = equipment;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

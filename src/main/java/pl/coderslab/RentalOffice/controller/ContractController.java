@@ -3,10 +3,7 @@ package pl.coderslab.RentalOffice.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.RentalOffice.entity.*;
 import pl.coderslab.RentalOffice.repository.ContractRepository;
 import pl.coderslab.RentalOffice.service.*;
@@ -15,6 +12,7 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -77,18 +75,41 @@ public class ContractController {
         if (bindingResult.hasErrors()){
             return "borrowedEquipment/form";
         }else {
-            //ustawić właściwie price, zmieniać available wypożyczonego sprzętu na false
-            //price może być nullem - encja
-            LocalDateTime localDateTime = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
-            localDateTime = localDateTime.plusHours(1);
-            borrowedEquipment.setBorrowedTo(localDateTime);
+            LocalDateTime borrowedTo = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
+            borrowedTo = borrowedTo.plusHours(1);
+            borrowedEquipment.setBorrowedTo(borrowedTo);
+            CatalogPrice catalogPrice = borrowedEquipment.getEquipment().getCatalogPrice();
+            LocalDateTime now = LocalDateTime.now();
+            Duration duration = Duration.between(now, borrowedTo);
+            if(duration.toHours() <= 2){
+                borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Hours()));
+            }
+            else if(duration.toHours() <= 5){
+                borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2To5Hours()));
+            }
+            else if(duration.toHours() <= 24){
+                borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor5To24Hours()));
+            }
+            else if(duration.toHours() <= 48){
+                borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Days()));
+            }
+            borrowedEquipment.getEquipment().setAvailable(false);  //sprzęt staje się niedostępny
+
 
 
             borrowedEquipmentService.add(borrowedEquipment);
             Contract contract = contractService.findLastAdded();
             contract.getBorrowedEquipmentList().add(borrowedEquipment);
+            int profit = 0;
+            for(BorrowedEquipment b : contract.getBorrowedEquipmentList()){
+                profit += b.getPrice();
+            }
+            contract.setProfit(profit);
             contractService.update(contract);
-            return "index";
+            List<Equipment> availableEquipment = equipmentService.getAvailableEquipment();
+            model.addAttribute("availableEquipment", availableEquipment);
+            model.addAttribute("borrowedEquipment", new BorrowedEquipment());
+            return "borrowedEquipment/form";
         }
     }
 
@@ -97,6 +118,12 @@ public class ContractController {
         List<Contract> contracts = contractService.getContracts();
         model.addAttribute("contracts", contracts);
         return "contract/list";
+    }
+
+    @GetMapping("/borrowedEquipment/{id}")
+    public String borrowedEquipmentForContract(@PathVariable Long id, Model model){
+        //List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.
+        return "index";
     }
 
 }

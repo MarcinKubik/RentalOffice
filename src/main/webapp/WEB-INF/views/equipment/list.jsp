@@ -27,7 +27,7 @@
             <td>${equipment.value}</td>
             <td>${equipment.description}</td>
             <td>${equipment.producent}</td>
-            <td>ceny</td><%--dodać listę!!!!!!!!!!!!--%>
+            <td><a href="/equipment/prices/${equipment.catalogPrice.id}">Pokaż ceny dla tego produktu</a> </td><%--dodać listę!--%>
         </tr>
     </c:forEach>
     </tbody>
