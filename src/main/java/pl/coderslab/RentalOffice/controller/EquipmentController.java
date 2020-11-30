@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.coderslab.RentalOffice.entity.BorrowedEquipment;
 import pl.coderslab.RentalOffice.entity.CatalogPrice;
 import pl.coderslab.RentalOffice.entity.Equipment;
+import pl.coderslab.RentalOffice.repository.BorrowedEquipmentRepository;
+import pl.coderslab.RentalOffice.service.BorrowedEquipmentService;
 import pl.coderslab.RentalOffice.service.CatalogPriceService;
 import pl.coderslab.RentalOffice.service.EquipmentService;
 
@@ -22,10 +25,12 @@ public class EquipmentController {
 
     private final EquipmentService equipmentService;
     private final CatalogPriceService catalogPriceService;
+    private final BorrowedEquipmentService borrowedEquipmentService;
 
-    public EquipmentController(EquipmentService equipmentService, CatalogPriceService catalogPriceService) {
+    public EquipmentController(EquipmentService equipmentService, CatalogPriceService catalogPriceService, BorrowedEquipmentService borrowedEquipmentService) {
         this.equipmentService = equipmentService;
         this.catalogPriceService = catalogPriceService;
+        this.borrowedEquipmentService = borrowedEquipmentService;
     }
 
     @GetMapping("/form")
@@ -72,7 +77,7 @@ public class EquipmentController {
     public String borrowedList(Model model){
         List<Equipment> borrowedList = equipmentService.getBorrowedEquipment();
         model.addAttribute("equipmentList", borrowedList);
-        return "equipment/list";
+        return "equipment/borrowedEquipmentList";
     }
 
     @GetMapping("/prices/{id}")
@@ -83,4 +88,36 @@ public class EquipmentController {
         return "equipment/prices";
     }
 
+    @GetMapping("/editPrices/{id}")
+    public String editPrices(@PathVariable Long id, Model model){
+        Optional<CatalogPrice> optionalCatalogPrice = catalogPriceService.get(id);
+        CatalogPrice catalogPrice = optionalCatalogPrice.get();
+        model.addAttribute("catalogPrice", catalogPrice);
+        return "catalogPrice/form";
+    }
+
+    @GetMapping("/return/{id}")
+    public String returnEquipment(@PathVariable Long id, Model model){
+        Optional<Equipment> optionalEquipment = equipmentService.get(id);
+        Equipment equipment = optionalEquipment.get();
+        equipment.setAvailable(true);
+        equipmentService.update(equipment);
+        return "redirect:/equipment/borrowedList";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteEquipment(@PathVariable Long id, Model model){
+        Optional<Equipment> optionalEquipment = equipmentService.get(id);
+        Equipment equipment = optionalEquipment.get();
+        if(equipment.getAvailable()){
+            List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.findByEquipmentId(id);
+            for(BorrowedEquipment b : borrowedEquipmentList){
+                borrowedEquipmentService.delete(b.getId());
+            }
+            equipmentService.delete(id);
+            return "redirect:/equipment/list";
+        }else {
+            return "equipment/deleteNotPossible";
+        }
+    }
 }

@@ -5,6 +5,7 @@ import pl.coderslab.RentalOffice.entity.Equipment;
 import pl.coderslab.RentalOffice.repository.EquipmentRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EquipmentService {
@@ -18,6 +19,9 @@ public class EquipmentService {
         return equipmentRepository.findAll();
     }
 
+    public Optional<Equipment> get(Long id){
+        return equipmentRepository.findById(id);
+    }
     public void add(Equipment equipment){
         equipmentRepository.save(equipment);
     }

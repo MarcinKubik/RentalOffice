@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.RentalOffice.entity.*;
 import pl.coderslab.RentalOffice.repository.ContractRepository;
+import pl.coderslab.RentalOffice.repository.CopyOfContractRepository;
 import pl.coderslab.RentalOffice.service.*;
 
 import javax.validation.Valid;
@@ -14,6 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -27,14 +30,16 @@ public class ContractController {
     private final CustomerService customerService;
     private final EquipmentService equipmentService;
     private final BorrowedEquipmentService borrowedEquipmentService;
+    CopyOfContractRepository copyOfContractRepository;
     public ContractController(ContractService contractService, EmployeeService employeeService,
                               CustomerService customerService, EquipmentService equipmentService,
-                              BorrowedEquipmentService borrowedEquipmentService){
+                              BorrowedEquipmentService borrowedEquipmentService, CopyOfContractRepository copyOfContractRepository){
         this.contractService = contractService;
         this.employeeService = employeeService;
         this.customerService = customerService;
         this.equipmentService = equipmentService;
         this.borrowedEquipmentService = borrowedEquipmentService;
+        this.copyOfContractRepository = copyOfContractRepository;
     }
 
     //dodaję pracownika do umowy
@@ -76,21 +81,20 @@ public class ContractController {
             return "borrowedEquipment/form";
         }else {
             LocalDateTime borrowedTo = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
-            borrowedTo = borrowedTo.plusHours(1);
             borrowedEquipment.setBorrowedTo(borrowedTo);
             CatalogPrice catalogPrice = borrowedEquipment.getEquipment().getCatalogPrice();
             LocalDateTime now = LocalDateTime.now();
             Duration duration = Duration.between(now, borrowedTo);
-            if(duration.toHours() <= 2){
+            if(duration.toMinutes() <= 120){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Hours()));
             }
-            else if(duration.toHours() <= 5){
+            else if(duration.toMinutes() <= 300){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2To5Hours()));
             }
-            else if(duration.toHours() <= 24){
+            else if(duration.toMinutes() <= 1440){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor5To24Hours()));
             }
-            else if(duration.toHours() <= 48){
+            else if(duration.toMinutes() <= 2888){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Days()));
             }
             borrowedEquipment.getEquipment().setAvailable(false);  //sprzęt staje się niedostępny
@@ -105,6 +109,12 @@ public class ContractController {
                 profit += b.getPrice();
             }
             contract.setProfit(profit);
+            CopyOfContract copyOfContract = new CopyOfContract();
+            copyOfContract.setContractNumber(contract.getContractNumber());
+            copyOfContract.setCustomer(contract.getCustomer().getFullName());
+            copyOfContract.setEmployee(contract.getEmployee().getFullName());
+            copyOfContract.setProfit(contract.getProfit());
+            copyOfContractRepository.save(copyOfContract);
             contractService.update(contract);
             List<Equipment> availableEquipment = equipmentService.getAvailableEquipment();
             model.addAttribute("availableEquipment", availableEquipment);
@@ -112,6 +122,7 @@ public class ContractController {
             return "borrowedEquipment/form";
         }
     }
+
 
     @GetMapping("/list")
     public String list(Model model){

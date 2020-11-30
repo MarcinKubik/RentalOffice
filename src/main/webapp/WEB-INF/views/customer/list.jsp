@@ -21,11 +21,22 @@
     <td>Miasto</td>
     <td>Ulica</td>
     <td>Numer</td>
-    <%--<td>Kontrakty (zrobić po id)</td>--%>
+    <td>Umowy</td>
+    <td>Usuń klienta</td>
     </thead>
     <tbody>
     <c:forEach items="${customers}" var="customer">
-
+        <tr>
+            <td>${customer.name}</td>
+            <td>${customer.surname}</td>
+            <td>${customer.email}</td>
+            <td>${customer.phoneNumber}</td>
+            <td>${customer.city}</td>
+            <td>${customer.street}</td>
+            <td>${customer.number}</td>
+            <td><a href="/customer/contracts/${customer.id}">Lista umów</a> </td>
+            <td><a href="/customer/delete/${customer.id}">Usuń</a></td>
+        </tr>
     </c:forEach>
     </tbody>
 </table>

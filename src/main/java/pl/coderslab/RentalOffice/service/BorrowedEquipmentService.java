@@ -24,6 +24,10 @@ public class BorrowedEquipmentService {
         return borrowedEquipmentRepository.equipmentForContract(id);
     }
 
+    public List<BorrowedEquipment> findByEquipmentId(Long id){
+        return borrowedEquipmentRepository.findByEquipmentId(id);
+    }
+
     public Optional<BorrowedEquipment> get(Long id){
         Optional<BorrowedEquipment> optionalBorrowedEquipment = borrowedEquipmentRepository.findById(id);
         return  optionalBorrowedEquipment;

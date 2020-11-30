@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.coderslab.RentalOffice.entity.Contract;
 import pl.coderslab.RentalOffice.entity.Customer;
 import pl.coderslab.RentalOffice.repository.CustomerRepository;
+import pl.coderslab.RentalOffice.service.ContractService;
 import pl.coderslab.RentalOffice.service.CustomerService;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,8 +24,10 @@ public class
 CustomerController {
 
     private final CustomerService customerService;
-    public CustomerController(CustomerService customerService){
+    private final ContractService contractService;
+    public CustomerController(CustomerService customerService, ContractService contractService){
         this.customerService = customerService;
+        this.contractService = contractService;
     }
 
     @GetMapping("/form")
@@ -62,4 +66,13 @@ CustomerController {
         customerService.delete(id);
         return "customer/list";
     }
+
+    @GetMapping("/contracts/{id}")
+    public String contractsOfCustomer(@PathVariable Long id, Model model){
+        List<Contract> contracts = contractService.findContractsOfCustomer(id);
+        model.addAttribute("contracts", contracts);
+        return "contract/list";
+    }
+
+
 }

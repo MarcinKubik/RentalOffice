@@ -39,4 +39,8 @@ public class ContractService {
     public Contract findLastAdded(){
         return contractRepository.findFirstByOrderByIdDesc();
     }
+
+    public List<Contract> findContractsOfCustomer(Long id){
+        return contractRepository.findContractsOfCustomer(id);
+    }
 }

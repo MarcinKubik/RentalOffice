@@ -18,6 +18,7 @@
     <td>Cena od 2 do 5 godzin</td>
     <td>Cena od 5 do 24 godzin</td>
     <td>Cena od 24 do 48 godzin</td>
+    <td>Edytuj ceny</td>
     </thead>
     <tbody>
     <tr>
@@ -25,6 +26,7 @@
         <td><c:out value="${catalogPrice.priceFor2To5Hours}"/></td>
         <td><c:out value="${catalogPrice.priceFor5To24Hours}"/></td>
         <td><c:out value="${catalogPrice.priceFor2Days}"/></td>
+        <td><a href="/equipment/editPrices/${catalogPrice.id}">Edytuj</a> </td>
     </tr>
     </tbody>
 </table>
