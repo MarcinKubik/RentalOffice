@@ -3,6 +3,7 @@ package pl.coderslab.RentalOffice.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
@@ -13,11 +14,10 @@ public class BorrowedEquipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     private int price;
-    /*@NotNull
-    @Pattern(regexp = "\\d+")
-    private String price;*/
-    @NotNull(message = "Nie może być null")
-    @Transient
+    @NotEmpty(message = "Nie wybrano daty")
+    private String borrowedFromString;
+    private LocalDateTime borrowedFrom;
+    @NotEmpty(message = "Nie wybrano daty")
     private String borrowedToString;
     private LocalDateTime borrowedTo;
     @OneToOne
@@ -25,10 +25,12 @@ public class BorrowedEquipment {
 
     public BorrowedEquipment(){
     }
-    public BorrowedEquipment(Long id, int price, LocalDateTime borrowedTo, Equipment equipment) {
+    public BorrowedEquipment(Long id, int price, LocalDateTime borrowedTo, LocalDateTime borrowedFrom,
+                             Equipment equipment) {
         this.id = id;
         this.price = price;
         this.borrowedTo = borrowedTo;
+        this.borrowedFrom = borrowedFrom;
         this.equipment = equipment;
     }
 
@@ -70,5 +72,21 @@ public class BorrowedEquipment {
 
     public void setBorrowedToString(String borrowedToString) {
         this.borrowedToString = borrowedToString;
+    }
+
+    public String getBorrowedFromString() {
+        return borrowedFromString;
+    }
+
+    public void setBorrowedFromString(String borrowedFromString) {
+        this.borrowedFromString = borrowedFromString;
+    }
+
+    public LocalDateTime getBorrowedFrom() {
+        return borrowedFrom;
+    }
+
+    public void setBorrowedFrom(LocalDateTime borrowedFrom) {
+        this.borrowedFrom = borrowedFrom;
     }
 }

@@ -22,6 +22,7 @@
     <td>Ulica</td>
     <td>Numer</td>
     <td>Umowy</td>
+    <td>Edytuj klienta</td>
     <td>Usuń klienta</td>
     </thead>
     <tbody>
@@ -35,6 +36,7 @@
             <td>${customer.street}</td>
             <td>${customer.number}</td>
             <td><a href="/customer/contracts/${customer.id}">Lista umów</a> </td>
+            <td><a href="/customer/form/${customer.id}">Edytuj</a></td>
             <td><a href="/customer/delete/${customer.id}">Usuń</a></td>
         </tr>
     </c:forEach>

@@ -83,7 +83,10 @@ public class EquipmentController {
     @GetMapping("/prices/{id}")
     public String pricesList(@PathVariable Long id, Model model){
         Optional<CatalogPrice> optionalCatalogPrice = catalogPriceService.get(id);
-        CatalogPrice catalogPrice = optionalCatalogPrice.get();
+        CatalogPrice catalogPrice = optionalCatalogPrice.orElse(null);
+        if(catalogPrice == null){
+            return "equipment/problem";
+        }
         model.addAttribute("catalogPrice", catalogPrice);
         return "equipment/prices";
     }
@@ -91,7 +94,10 @@ public class EquipmentController {
     @GetMapping("/editPrices/{id}")
     public String editPrices(@PathVariable Long id, Model model){
         Optional<CatalogPrice> optionalCatalogPrice = catalogPriceService.get(id);
-        CatalogPrice catalogPrice = optionalCatalogPrice.get();
+        CatalogPrice catalogPrice = optionalCatalogPrice.orElse(null);
+        if(catalogPrice == null){
+            return "equipment/problem";
+        }
         model.addAttribute("catalogPrice", catalogPrice);
         return "catalogPrice/form";
     }
@@ -99,7 +105,10 @@ public class EquipmentController {
     @GetMapping("/return/{id}")
     public String returnEquipment(@PathVariable Long id, Model model){
         Optional<Equipment> optionalEquipment = equipmentService.get(id);
-        Equipment equipment = optionalEquipment.get();
+        Equipment equipment = optionalEquipment.orElse(null);
+        if(equipment == null){
+            return "equipment/problem";
+        }
         equipment.setAvailable(true);
         equipmentService.update(equipment);
         return "redirect:/equipment/borrowedList";
@@ -108,7 +117,10 @@ public class EquipmentController {
     @GetMapping("/delete/{id}")
     public String deleteEquipment(@PathVariable Long id, Model model){
         Optional<Equipment> optionalEquipment = equipmentService.get(id);
-        Equipment equipment = optionalEquipment.get();
+        Equipment equipment = optionalEquipment.orElse(null);
+        if(equipment == null){
+            return "equipment/problem";
+        }
         if(equipment.getAvailable()){
             List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.findByEquipmentId(id);
             for(BorrowedEquipment b : borrowedEquipmentList){

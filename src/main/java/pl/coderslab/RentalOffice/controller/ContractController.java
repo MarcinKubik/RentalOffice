@@ -3,22 +3,17 @@ package pl.coderslab.RentalOffice.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.RentalOffice.entity.*;
-import pl.coderslab.RentalOffice.repository.ContractRepository;
-import pl.coderslab.RentalOffice.repository.CopyOfContractRepository;
 import pl.coderslab.RentalOffice.service.*;
 
 import javax.validation.Valid;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,16 +25,14 @@ public class ContractController {
     private final CustomerService customerService;
     private final EquipmentService equipmentService;
     private final BorrowedEquipmentService borrowedEquipmentService;
-    CopyOfContractRepository copyOfContractRepository;
     public ContractController(ContractService contractService, EmployeeService employeeService,
                               CustomerService customerService, EquipmentService equipmentService,
-                              BorrowedEquipmentService borrowedEquipmentService, CopyOfContractRepository copyOfContractRepository){
+                              BorrowedEquipmentService borrowedEquipmentService){
         this.contractService = contractService;
         this.employeeService = employeeService;
         this.customerService = customerService;
         this.equipmentService = equipmentService;
         this.borrowedEquipmentService = borrowedEquipmentService;
-        this.copyOfContractRepository = copyOfContractRepository;
     }
 
     //dodaję pracownika do umowy
@@ -77,14 +70,35 @@ public class ContractController {
 
     @PostMapping("/addEquipment")
     public String addEquipment(@Valid BorrowedEquipment borrowedEquipment, BindingResult bindingResult, Model model) throws ParseException {
+        if(!borrowedEquipment.getBorrowedFromString().equals("") && !borrowedEquipment.getBorrowedToString().equals("")){
+            LocalDateTime start = LocalDateTime.parse(borrowedEquipment.getBorrowedFromString());
+            LocalDateTime end = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
+
+            if(start.isBefore(LocalDateTime.now().minusMinutes(1))){  // minuta na akceptację jeśli wybrano chwilę obecną
+                FieldError error = new FieldError("borrowedEquipment", "borrowedFromString", "Wybrano datę z przeszłości");
+                bindingResult.addError(error);
+            }
+
+            if(start.isAfter(end) || start.isEqual(end)){
+                FieldError error = new FieldError("borrowedEquipment", "borrowedFromString", "Zła kolejność dat");
+                bindingResult.addError(error);
+            }
+
+            if(Duration.between(start, end).toMinutes() > 2880){
+                FieldError error = new FieldError("borrowedEquipment", "borrowedToString", "Maksymalnie 48 godzin!");
+                bindingResult.addError(error);
+            }
+        }
         if (bindingResult.hasErrors()){
+            model.addAttribute("borrowedEquipment", borrowedEquipment);
             return "borrowedEquipment/form";
         }else {
+            LocalDateTime borrowedFrom = LocalDateTime.parse(borrowedEquipment.getBorrowedFromString());
             LocalDateTime borrowedTo = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
+            borrowedEquipment.setBorrowedFrom(borrowedFrom);
             borrowedEquipment.setBorrowedTo(borrowedTo);
             CatalogPrice catalogPrice = borrowedEquipment.getEquipment().getCatalogPrice();
-            LocalDateTime now = LocalDateTime.now();
-            Duration duration = Duration.between(now, borrowedTo);
+            Duration duration = Duration.between(borrowedFrom, borrowedTo);
             if(duration.toMinutes() <= 120){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Hours()));
             }
@@ -94,12 +108,10 @@ public class ContractController {
             else if(duration.toMinutes() <= 1440){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor5To24Hours()));
             }
-            else if(duration.toMinutes() <= 2888){
+            else if(duration.toMinutes() <= 2880){
                 borrowedEquipment.setPrice(Integer.parseInt(catalogPrice.getPriceFor2Days()));
             }
             borrowedEquipment.getEquipment().setAvailable(false);  //sprzęt staje się niedostępny
-
-
 
             borrowedEquipmentService.add(borrowedEquipment);
             Contract contract = contractService.findLastAdded();
@@ -109,12 +121,7 @@ public class ContractController {
                 profit += b.getPrice();
             }
             contract.setProfit(profit);
-            CopyOfContract copyOfContract = new CopyOfContract();
-            copyOfContract.setContractNumber(contract.getContractNumber());
-            copyOfContract.setCustomer(contract.getCustomer().getFullName());
-            copyOfContract.setEmployee(contract.getEmployee().getFullName());
-            copyOfContract.setProfit(contract.getProfit());
-            copyOfContractRepository.save(copyOfContract);
+           
             contractService.update(contract);
             List<Equipment> availableEquipment = equipmentService.getAvailableEquipment();
             model.addAttribute("availableEquipment", availableEquipment);

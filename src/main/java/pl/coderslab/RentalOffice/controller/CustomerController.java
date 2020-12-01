@@ -49,7 +49,10 @@ CustomerController {
     @GetMapping("/form/{id}")
     public String edit(@PathVariable Long id, Model model){
         Optional<Customer> optionalCustomer = customerService.get(id);
-        Customer customer = optionalCustomer.orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+        Customer customer = optionalCustomer.orElse(null);
+        if(customer == null){
+            return "customer/editNotPossible";
+        }
         model.addAttribute("customer", customer);
         return "customer/form";
     }
@@ -63,6 +66,7 @@ CustomerController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
+        //usunąć najpierw listę umów i borrowedEquipment
         customerService.delete(id);
         return "customer/list";
     }

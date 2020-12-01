@@ -99,4 +99,8 @@ public class Equipment {
     public void setProducent(String producent) {
         this.producent = producent;
     }
+
+    public String getFullInfo(){
+        return name + " - " + description;
+    }
 }

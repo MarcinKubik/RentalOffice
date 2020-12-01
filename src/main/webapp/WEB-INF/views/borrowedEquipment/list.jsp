@@ -14,12 +14,14 @@
 <body>
 <table>
     <thead>
+    <td>Wypożyczono od</td>
     <td>Wypożyczono do</td>
     <td>Sprzęt</td>
     </thead>
     <tbody>
     <c:forEach items="${borrowedEquipmentList}" var="borrowedEquipment">
         <tr>
+            <td>${borrowedEquipment.borrowedFrom}</td>
             <td>${borrowedEquipment.borrowedTo}</td>
             <td>${borrowedEquipment.equipment.name}</td>
         </tr>
