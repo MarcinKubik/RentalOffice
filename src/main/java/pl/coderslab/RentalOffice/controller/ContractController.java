@@ -4,9 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.coderslab.RentalOffice.entity.*;
 import pl.coderslab.RentalOffice.service.*;
 
@@ -69,18 +67,18 @@ public class ContractController {
     }
 
     @PostMapping("/addEquipment")
-    public String addEquipment(@Valid BorrowedEquipment borrowedEquipment, BindingResult bindingResult, Model model) throws ParseException {
+    public String addEquipment(@Valid BorrowedEquipment borrowedEquipment, BindingResult bindingResult, Model model){
         if(!borrowedEquipment.getBorrowedFromString().equals("") && !borrowedEquipment.getBorrowedToString().equals("")){
             LocalDateTime start = LocalDateTime.parse(borrowedEquipment.getBorrowedFromString());
             LocalDateTime end = LocalDateTime.parse(borrowedEquipment.getBorrowedToString());
 
             if(start.isBefore(LocalDateTime.now().minusMinutes(1))){  // minuta na akceptację jeśli wybrano chwilę obecną
-                FieldError error = new FieldError("borrowedEquipment", "borrowedFromString", "Wybrano datę z przeszłości");
+                FieldError error = new FieldError("borrowedEquipment", "borrowedToString", "Wybrano datę z przeszłości");
                 bindingResult.addError(error);
             }
 
             if(start.isAfter(end) || start.isEqual(end)){
-                FieldError error = new FieldError("borrowedEquipment", "borrowedFromString", "Zła kolejność dat");
+                FieldError error = new FieldError("borrowedEquipment", "borrowedToString", "Zła kolejność dat");
                 bindingResult.addError(error);
             }
 
