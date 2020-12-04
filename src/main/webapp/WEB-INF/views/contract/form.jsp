@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Dodaj umowę</title>
@@ -21,9 +22,8 @@
     <form:input path="contractNumber"/>
     <form:errors path="contractNumber" cssClass="error"/><br>
 
-    <form:label path="employee">Pracownik</form:label>
-    <form:select path="employee" items="${employee}" itemLabel="fullName" itemValue="id"/>
-    <form:errors path="employee" cssClass="error"/><br>
+    <form:hidden path="employee" value="${employee}"/>
+    <p>Pracownik <c:out value="${employee.fullName}"/></p>
 
     <form:label path="customer">Klient:</form:label>
     <form:select path="customer" items="${customers}" itemLabel="fullName" itemValue="id" />

@@ -1,17 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: marcin
-  Date: 01.12.2020
-  Time: 17:11
+  Date: 04.12.2020
+  Time: 18:24
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Problem</title>
+    <title>Pierwszy pracownik już istnieje</title>
 </head>
 <body>
-<p>Problem z danymi obiektu</p>
+<p>Pierwszy pracownik już istnieje</p>
 <a href="/">Powrót do menu</a>
 </body>
 </html>

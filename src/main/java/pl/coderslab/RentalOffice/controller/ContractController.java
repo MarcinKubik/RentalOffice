@@ -1,5 +1,7 @@
 package pl.coderslab.RentalOffice.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,8 +37,15 @@ public class ContractController {
 
     //dodaję pracownika do umowy
     @ModelAttribute("employee")
-    public List<Employee> employee(){
-        return employeeService.findLogged();
+    public Employee employee(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login;
+        if (principal instanceof UserDetails) {
+            login = ((UserDetails)principal).getUsername();
+        } else {
+            login = principal.toString();
+        }
+        return employeeService.findByLogin(login);
     }
 
     @ModelAttribute("customers")

@@ -20,6 +20,7 @@ public class Customer {
     @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
     private String surname;
     @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}")
+    @Column(unique = true)
     private String email;
     @NotNull
     @Pattern(regexp = "[0-9]{9}")

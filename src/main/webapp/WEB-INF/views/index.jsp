@@ -20,5 +20,11 @@
 <p><a href="/contract/form">DODAJ UMOWĘ</a></p>
 <p><a href="/equipment/form">DODAJ SPRZĘT</a></p>
 <p><a href="/customer/list">KLIENCI</a> </p>
+<p><a href="/employee/form">DODAJ PRACOWNIKA</a></p>
+<p><a href="/employee/addFirstEmployee">DODAJ PIERWSZEGO PRACOWNIKA</a></p>
+<form action="/logout" method="post">
+    <input class="fa fa-id-badge" type="submit" value="Wyloguj">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 </body>
 </html>

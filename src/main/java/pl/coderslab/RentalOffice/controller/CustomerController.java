@@ -67,8 +67,13 @@ CustomerController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
         //usunąć najpierw listę umów i borrowedEquipment
+        Optional<Customer> optionalCustomer = customerService.get(id);
+        Customer customer = optionalCustomer.orElse(null);
+        if (customer == null){
+            return "equipment/problem";
+        }
         customerService.delete(id);
-        return "customer/list";
+        return "redirect:/customer/list";
     }
 
     @GetMapping("/contracts/{id}")

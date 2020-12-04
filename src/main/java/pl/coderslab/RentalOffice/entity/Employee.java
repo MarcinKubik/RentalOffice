@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "workers")
@@ -25,24 +26,26 @@ public class Employee {
     @NotNull
     @Pattern(regexp = "\\S{8,}")
     private String password;
-    @NotNull
-    private boolean isLogged;
+    private boolean enabled;
     @OneToMany(mappedBy = "employee")
     private List<Contract> contracts = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "employee_role", joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Employee(){
 
     }
-//public Employee(Long id, @NotNull @Pattern(regexp = "[A-Z]{1}[a-z]{2,}") String name, @NotNull @Pattern(regexp = "[A-Z]{1}[a-z]{2,}") String surname,
-// @NotNull String login, @NotNull @Pattern(regexp = "\\S{8,}") String password, List<Contract> contracts) {
-    // sprawdzić czy to jest poprawne
-    public Employee(Long id, String name, String surname, String login, String password, boolean isLogged, List<Contract> contracts) {
+
+    public Employee(Long id, String name, String surname, String login, String password, boolean enabled, List<Contract> contracts) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.isLogged = isLogged;
+        this.enabled = enabled;
         this.contracts = contracts;
     }
 
@@ -86,12 +89,12 @@ public class Employee {
         this.password = password;
     }
 
-    public boolean isLogged() {
-        return isLogged;
+    public boolean getEnabled() {
+        return enabled;
     }
 
-    public void setLogged(boolean logged) {
-        isLogged = logged;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<Contract> getContracts() {
@@ -104,5 +107,18 @@ public class Employee {
 
     public String getFullName(){
         return name + " " + surname;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id);
     }
 }
