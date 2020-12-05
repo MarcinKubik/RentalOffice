@@ -43,4 +43,8 @@ public class ContractService {
     public List<Contract> findContractsOfCustomer(Long id){
         return contractRepository.findContractsOfCustomer(id);
     }
+
+    public List<Contract> findContractsOfEmployee(Long id){
+        return contractRepository.findContractsOfEmployee(id);
+    }
 }

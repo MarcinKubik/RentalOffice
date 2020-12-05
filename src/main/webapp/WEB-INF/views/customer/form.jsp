@@ -46,5 +46,6 @@
 
     <button type="submit">Wyślij</button>
 </form:form>
+<a href="/">Powrót do menu</a>
 </body>
 </html>

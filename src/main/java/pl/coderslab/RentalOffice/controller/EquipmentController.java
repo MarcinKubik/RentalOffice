@@ -115,7 +115,7 @@ public class EquipmentController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEquipment(@PathVariable Long id, Model model){
+    public String deleteEquipment(@PathVariable Long id){
         Optional<Equipment> optionalEquipment = equipmentService.get(id);
         Equipment equipment = optionalEquipment.orElse(null);
         if(equipment == null){

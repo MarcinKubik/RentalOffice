@@ -13,24 +13,27 @@
 </head>
 <body>
 <table>
-<thead>
+    <thead>
     <td>Numer umowy</td>
     <td>Należność</td>
     <td>Pracownik</td>
     <td>Klient</td>
     <td>Szczegóły umowy</td>
-</thead>
+    <td>Usuń umowę</td>
+    </thead>
     <tbody>
     <c:forEach items="${contracts}" var="contract">
         <tr>
-        <td>${contract.contractNumber}</td>
-        <td>${contract.profit}</td>
-        <td>${contract.employee.fullName}</td>
-        <td>${contract.customer.fullName}</td>
-        <td><a href="/contract/borrowedEquipment/${contract.id}">Szczegóły umowy</a></td>
+            <td>${contract.id}</td>
+            <td>${contract.profit}</td>
+            <td>${contract.employee.fullName}</td>
+            <td>${contract.customer.fullName}</td>
+            <td><a href="/contract/borrowedEquipment/${contract.id}">Szczegóły umowy</a></td>
+            <td><a href="/contract/delete/${contract.id}">Usuń</a></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<a href="/">Powrót do menu</a>
 </body>
 </html>

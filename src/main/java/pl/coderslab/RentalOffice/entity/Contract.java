@@ -14,10 +14,10 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    /*@NotNull  //do przemyślenia
     @Pattern(regexp = "\\d+\\/(20)[2-9]{1}[0-9]{1}")
     @Column(unique = true)
-    private String contractNumber;
+    private String contractNumber;*/
     private int profit;
     @ManyToOne
     private Employee employee;
@@ -33,9 +33,10 @@ public class Contract {
 
     }
 
-    public Contract(Long id, String contractNumber, int profit, Employee employee, Customer customer, List<BorrowedEquipment> borrowedEquipmentList){
+    public Contract(Long id, int profit,
+                    Employee employee, Customer customer, List<BorrowedEquipment> borrowedEquipmentList){
         this.id = id;
-        this.contractNumber = contractNumber;
+        //this.contractNumber = contractNumber; // rozważyć możliwość dodania w przyszłości
         this.profit = profit;
         this.employee = employee;
         this.customer = customer;
@@ -50,13 +51,13 @@ public class Contract {
         this.id = id;
     }
 
-    public String getContractNumber() {
+    /*public String getContractNumber() {
         return contractNumber;
-    }
+    }*/
 
-    public void setContractNumber(String contractNumber) {
+   /* public void setContractNumber(String contractNumber) {
         this.contractNumber = contractNumber;
-    }
+    }*/
 
     public Employee getEmployee() {
         return employee;

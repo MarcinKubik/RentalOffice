@@ -29,8 +29,8 @@ public class Employee {
     private boolean enabled;
     @OneToMany(mappedBy = "employee")
     private List<Contract> contracts = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//cascade = CascadeType.ALL,
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "employee_role", joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

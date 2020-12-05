@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/contract")
@@ -130,6 +131,7 @@ public class ContractController {
             contract.setProfit(profit);
            
             contractService.update(contract);
+            //CopyOfContract
             List<Equipment> availableEquipment = equipmentService.getAvailableEquipment();
             model.addAttribute("availableEquipment", availableEquipment);
             model.addAttribute("borrowedEquipment", new BorrowedEquipment());
@@ -150,6 +152,18 @@ public class ContractController {
         List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.equipmentForContract(id);
         model.addAttribute("borrowedEquipmentList", borrowedEquipmentList);
         return "borrowedEquipment/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        Optional<Contract> optionalContract = contractService.get(id);
+        Contract contract = optionalContract.orElse(null);
+        if(contract == null){
+            return "contract/problem";
+        }else {
+            contractService.delete(id);
+            return "redirect:/contract/list";
+        }
     }
 
 }

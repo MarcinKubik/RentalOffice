@@ -17,10 +17,10 @@
 <form:form modelAttribute="contract"  method="post" action="/contract/form">
     <form:hidden path="id"/>
 
-
-    <form:label path="contractNumber">Numer umowy:</form:label>
+    <%--dodać jeśli zmienię format numeru umowy--%>
+    <%--<form:label path="contractNumber">Numer umowy:</form:label>
     <form:input path="contractNumber"/>
-    <form:errors path="contractNumber" cssClass="error"/><br>
+    <form:errors path="contractNumber" cssClass="error"/><br>--%>
 
     <form:hidden path="employee" value="${employee}"/>
     <p>Pracownik <c:out value="${employee.fullName}"/></p>
@@ -30,5 +30,6 @@
     <form:errors path="customer" cssClass="error"/><br>
     <button type="submit">Wyślij</button>
 </form:form>
+<a href="/">Powrót do menu</a>
 </body>
 </html>
