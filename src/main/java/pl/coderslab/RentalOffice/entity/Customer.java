@@ -14,27 +14,28 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Podaj poprawne imię")
     private String name;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Podaj poprawne nazwisko")
     private String surname;
-    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}")
+    @Pattern(regexp = "[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.([a-zA-Z]{2,}){1}",
+            message = "Podaj poprawny adres email")
     @Column(unique = true)
     private String email;
     @NotNull
-    @Pattern(regexp = "[0-9]{9}")
+    @Pattern(regexp = "[0-9]{9}", message = "Podaj 9-cyfrowy numer telefonu")
     private String phoneNumber;
     @OneToMany(mappedBy = "customer")
     private List<Contract> contracts = new ArrayList<>();
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Podaj nazwę miejscowości")
     private String city;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Podaj ulicę")
     private String street;
     @NotNull
-    @Pattern(regexp = "\\d+", message = "error")
+    @Pattern(regexp = "\\d+", message = "Podaj numer mieszkania")
     private String number;
 
 

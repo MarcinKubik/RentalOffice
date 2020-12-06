@@ -3,6 +3,7 @@ package pl.coderslab.RentalOffice.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,16 +16,17 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁ]{1}[a-zóżźćąęł]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁĆ]{1}[a-zóżźćąęłń]{2,}", message = "Podaj poprawne imię")
     private String name;
     @NotNull
-    @Pattern(regexp = "[A-ZÓŹŻĆŁŚ]{1}[a-zóżźćąęłś]{2,}")
+    @Pattern(regexp = "[A-ZÓŹŻĆŁŚĆ]{1}[a-zóżźćąęłśń]{2,}", message = "Podaj poprawne nazwisko")
     private String surname;
     @NotNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @Size(min = 3, message = "Minimum 3 znaki")
     private String login;
     @NotNull
-    @Pattern(regexp = "\\S{8,}")
+    @Pattern(regexp = "\\S{8,}", message = "Hasło musi zawierać co najmniej 8 znaków")
     private String password;
     private boolean enabled;
     @OneToMany(mappedBy = "employee")

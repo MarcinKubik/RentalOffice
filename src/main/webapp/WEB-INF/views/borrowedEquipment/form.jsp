@@ -30,6 +30,6 @@
     <form:errors path="equipment" cssClass="error"/><br>
     <button type="submit">Dodaj Sprzęt</button>
 </form:form><br>
-<a href="/">Koniec zamówienia</a>
+<a href="/contract/createCopyOfContract">Koniec zamówienia</a>
 </body>
 </html>

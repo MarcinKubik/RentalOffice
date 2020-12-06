@@ -17,6 +17,7 @@
 <p><a href="/customer/list">KLIENCI</a> </p>
 <p><a href="/customer/form">DODAJ KLIENTA</a></p>
 <p><a href="/contract/list">UMOWY</a></p>
+<p><a href="/contract/copies">KOPIE UMÓW</a> </p>
 <p><a href="/contract/form">DODAJ UMOWĘ</a></p>
 <p><a href="/employee/list">PRACOWNICY</a></p>
 <p><a href="/employee/form">DODAJ PRACOWNIKA</a></p>

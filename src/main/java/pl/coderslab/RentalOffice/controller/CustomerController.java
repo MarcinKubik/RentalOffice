@@ -39,6 +39,7 @@ CustomerController {
 
     @PostMapping("/form")
     public String processForm(@Valid Customer customer, BindingResult bindingResult, Model model){
+        if(customer.getId() == null){ // sprawdzam czy to nowy klient bo inaczej przy edycji dostanę komunikat że mail istnieje
         List<Customer> customers = customerService.getCustomers();
         for(Customer c : customers){
             if (c.getEmail().equals(customer.getEmail())){
@@ -46,12 +47,14 @@ CustomerController {
                 bindingResult.addError(error);
             }
         }
+        }
         if(bindingResult.hasErrors()){
             return "customer/form";
         }else{
             customerService.add(customer);
                 return "index";
         }
+
     }
 
     @GetMapping("/form/{id}")

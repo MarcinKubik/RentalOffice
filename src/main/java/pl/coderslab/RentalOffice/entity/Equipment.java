@@ -10,21 +10,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "equipment")
 public class Equipment {
-    // wszystkie pola private final, bez setterów klasa immutable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "not null")
-    @Size(min = 3)
+    @NotNull
+    @Size(min = 3, message = "Podaj nazwę sprzętu")
     private String name;
     @NotNull
-    @Pattern(regexp = "\\d+")
+    @Pattern(regexp = "\\d+", message = "Podaj wartość sprzętu")
     private String value;
-    @NotBlank
-    @Size(min = 20)
+    @NotBlank(message = "Nie może być pusty")
+    @Size(min = 20, message = "Podaj opis sprzętu - minimum 20 znaków")
     private String description;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 2, message = "Podaj producenta")
     private String producent;
     private boolean available;
     @OneToOne

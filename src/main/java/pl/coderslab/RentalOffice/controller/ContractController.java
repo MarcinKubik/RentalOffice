@@ -8,10 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.RentalOffice.entity.*;
+import pl.coderslab.RentalOffice.repository.CopyOfContractRepository;
 import pl.coderslab.RentalOffice.service.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,14 +26,16 @@ public class ContractController {
     private final CustomerService customerService;
     private final EquipmentService equipmentService;
     private final BorrowedEquipmentService borrowedEquipmentService;
+    private final CopyOfContractRepository copyOfContractRepository;
     public ContractController(ContractService contractService, EmployeeService employeeService,
                               CustomerService customerService, EquipmentService equipmentService,
-                              BorrowedEquipmentService borrowedEquipmentService){
+                              BorrowedEquipmentService borrowedEquipmentService, CopyOfContractRepository copyOfContractRepository){
         this.contractService = contractService;
         this.employeeService = employeeService;
         this.customerService = customerService;
         this.equipmentService = equipmentService;
         this.borrowedEquipmentService = borrowedEquipmentService;
+        this.copyOfContractRepository = copyOfContractRepository;
     }
 
     //dodaję pracownika do umowy
@@ -61,6 +63,9 @@ public class ContractController {
 
     @GetMapping("/form")
     public String form(Model model){
+        if(availableEquipment().size() == 0){
+            return "contract/empty";
+        }
         model.addAttribute("contract", new Contract());
         return "contract/form";
     }
@@ -131,12 +136,32 @@ public class ContractController {
             contract.setProfit(profit);
            
             contractService.update(contract);
-            //CopyOfContract
             List<Equipment> availableEquipment = equipmentService.getAvailableEquipment();
+
+            if(availableEquipment.size() == 0){
+                return "redirect:/contract/createCopyOfContract";
+            }
             model.addAttribute("availableEquipment", availableEquipment);
             model.addAttribute("borrowedEquipment", new BorrowedEquipment());
             return "borrowedEquipment/form";
         }
+    }
+
+    @GetMapping("/createCopyOfContract")
+    public String createCopyOfContract(){
+        Contract contract = contractService.findLastAdded();
+        CopyOfContract copyOfContract = new CopyOfContract();
+        copyOfContract.setProfit(contract.getProfit());
+        copyOfContract.setEmployee(contract.getEmployee().getFullName());
+        copyOfContract.setCustomer(contract.getCustomer().getFullName());
+        StringBuilder stringBuilder = new StringBuilder();
+        for(BorrowedEquipment b : contract.getBorrowedEquipmentList()){
+            stringBuilder.append("Przedmiot: " + b.getEquipment().getFullInfo() + ", wypożyczono od: " + b.getBorrowedFrom()
+            + ", wypożyczono do: " + b.getBorrowedTo() + ", <br>");
+        }
+        copyOfContract.setBorrowDetails(stringBuilder.toString());
+        copyOfContractRepository.save(copyOfContract);
+        return "index";
     }
 
 
@@ -147,6 +172,12 @@ public class ContractController {
         return "contract/list";
     }
 
+    @GetMapping("/copies")
+    public String copies(Model model){
+        List<CopyOfContract> copies = copyOfContractRepository.findAll();
+        model.addAttribute("copies", copies);
+        return "contract/copies";
+    }
     @GetMapping("/borrowedEquipment/{id}")
     public String borrowedEquipmentForContract(@PathVariable Long id, Model model){
         List<BorrowedEquipment> borrowedEquipmentList = borrowedEquipmentService.equipmentForContract(id);

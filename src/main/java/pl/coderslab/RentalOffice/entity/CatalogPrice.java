@@ -11,21 +11,20 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 public final class CatalogPrice {
-// wszystkie pola private final, bez setterów klasa immutable???
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     @NotNull
-    @Pattern(regexp = "\\d+")
+    @Pattern(regexp = "\\d+", message = "Podaj cenę jako ciąg cyfr")
     private String priceFor2Hours;
     @NotNull
-    @Pattern(regexp = "\\d+")
+    @Pattern(regexp = "\\d+", message = "Podaj cenę jako ciąg cyfr")
     private String priceFor2To5Hours;
     @NotNull
-    @Pattern(regexp = "\\d+")
+    @Pattern(regexp = "\\d+", message = "Podaj cenę jako ciąg cyfr")
     private String priceFor5To24Hours;
     @NotNull
-    @Pattern(regexp = "\\d+")
+    @Pattern(regexp = "\\d+", message = "Podaj cenę jako ciąg cyfr")
     private String priceFor2Days;
 
     public CatalogPrice(){
