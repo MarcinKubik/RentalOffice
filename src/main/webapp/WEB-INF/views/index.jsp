@@ -22,7 +22,7 @@
 <p><a href="/employee/list">PRACOWNICY</a></p>
 <p><a href="/employee/form">DODAJ PRACOWNIKA</a></p>
 <p><a href="/employee/addFirstEmployee">DODAJ PIERWSZEGO PRACOWNIKA</a></p>
-<p><a href="">KALENDARZ</a></p>
+<p><a href="/calendar">KALENDARZ</a></p>
 <p><a href="">KONTAKT Z KLIENTEM</a></p>
 <form action="/logout" method="post">
     <input class="fa fa-id-badge" type="submit" value="Wyloguj">
