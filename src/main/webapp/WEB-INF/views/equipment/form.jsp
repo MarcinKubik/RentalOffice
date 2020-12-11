@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Dodaj nowy sprzęt</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <form:form modelAttribute="equipment" method="post" action="/equipment/form">

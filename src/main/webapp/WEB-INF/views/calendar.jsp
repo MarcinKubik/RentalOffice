@@ -7,18 +7,7 @@
     <link rel="stylesheet" href='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js'></script>
     <script>
-        data = [
-           /* {
-            title: 'Conference',
-            start: '2020-12-15',
-            end: '2020-12-17'
-        },
-            {
-                title: 'Long Event',
-                start: '2020-12-15',
-                end: '2020-12-17'
-            }*/
-            ];
+        data = [];
         <c:forEach items="${stillBorrowedEquipment}" var="equipment">
         var event = {
             title: '${equipment.equipment.name}',
@@ -32,6 +21,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                displayEventEnd: true,
                 initialDate: Date.now(),
                 headerToolbar: {
                     left: 'prev,next today',

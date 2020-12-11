@@ -151,6 +151,7 @@ public class ContractController {
     public String createCopyOfContract(){
         Contract contract = contractService.findLastAdded();
         CopyOfContract copyOfContract = new CopyOfContract();
+        copyOfContract.setContractNumber(contract.getId());
         copyOfContract.setProfit(contract.getProfit());
         copyOfContract.setEmployee(contract.getEmployee().getFullName());
         copyOfContract.setCustomer(contract.getCustomer().getFullName());

@@ -11,12 +11,13 @@ public class CopyOfContract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long contractNumber;
     private int profit;
     private String customer;
     private String employee;
 
     @NotEmpty
-    @Size(max = 1000)
+    @Size(max = 2000)
     private String borrowDetails;
 
     public Long getId() {
@@ -57,5 +58,13 @@ public class CopyOfContract {
 
     public void setBorrowDetails(String borrowDetails) {
         this.borrowDetails = borrowDetails;
+    }
+
+    public Long getContractNumber() {
+        return contractNumber;
+    }
+
+    public void setContractNumber(Long contractNumber) {
+        this.contractNumber = contractNumber;
     }
 }

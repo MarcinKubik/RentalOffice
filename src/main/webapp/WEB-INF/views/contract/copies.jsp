@@ -12,37 +12,7 @@
     <title>Kopie umów</title>
 </head>
 <body>
-<%--<table>
-    <thead>
-    <td>Numer</td>
-    <td>Pracownik</td>
-    <td>Klient</td>
-    <td>Należność</td>
-    </thead>
-    <tbody>
-    <c:forEach items="${copies}" var="copy">
-        <tr>
-            <td>${copy.id}</td>
-            <td>${copy.employee}</td>
-            <td>${copy.customer}</td>
-            <td>${copy.profit}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<table>
-    <thead>
-    <td>Szczegóły</td>
-    </thead>
-    <tbody>
-    <c:forEach items="${copies}" var="copy">
-        <tr>
-            <td>${copy.borrowDetails}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-<br><br>--%>
+
 <c:forEach items="${copies}" var="copy">
     <table>
         <thead>
@@ -53,7 +23,7 @@
         </thead>
         <tbody>
         <tr>
-            <td>${copy.id}</td>
+            <td>${copy.contractNumber}</td>
             <td>${copy.employee}</td>
             <td>${copy.customer}</td>
             <td>${copy.profit}</td>

@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Ceny katalogowe</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <p>DODAJ ZESTAW CEN DLA TEGO PRODUKTU</p>

@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Sprzęt do umowy</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <p>DODAJ SPRZĘT</p>

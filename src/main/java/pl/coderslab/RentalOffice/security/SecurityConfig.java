@@ -55,15 +55,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/403");
-
-               /* .antMatchers("/equipment/delete/**").hasRole("ADMIN")
-                .antMatchers("/customer/delete/**").hasRole("ADMIN")
-                .antMatchers("/employee/form").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                .and().logout().logoutSuccessUrl("/")
-                .permitAll()
-                //.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-                .and().exceptionHandling().accessDeniedPage("/403");*/
     }
 }

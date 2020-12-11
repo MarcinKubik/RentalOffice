@@ -12,6 +12,11 @@
 <html>
 <head>
     <title>Dodaj umowę</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <form:form modelAttribute="contract"  method="post" action="/contract/form">

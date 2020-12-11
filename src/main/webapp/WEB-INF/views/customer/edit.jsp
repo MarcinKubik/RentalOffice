@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Edycja klienta</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <form:form modelAttribute="customer" method="post" action="/customer/form">

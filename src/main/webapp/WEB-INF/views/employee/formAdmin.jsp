@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Dodaj administratora</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <form:form modelAttribute="employee" method="post">

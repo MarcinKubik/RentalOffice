@@ -14,9 +14,9 @@ public interface BorrowedEquipmentRepository extends JpaRepository<BorrowedEquip
     @Query(value = "SELECT * FROM borrowed_equipment WHERE equipment_id=?1",nativeQuery = true)
     List<BorrowedEquipment> findByEquipmentId(Long id);
 
-    @Query("SELECT b FROM BorrowedEquipment b WHERE b.equipment.available=false ORDER BY b.borrowedTo DESC")
-    List<BorrowedEquipment> findStillBorrowedEquipment();
-
-    /*@Query("SELECT * FROM borrowed_equipment WHERE ", nativeQuery = true)
+   /* @Query("SELECT b FROM BorrowedEquipment b WHERE b.equipment.available=false ORDER BY b.borrowedTo DESC")
     List<BorrowedEquipment> findStillBorrowedEquipment();*/
+
+    @Query("SELECT b FROM BorrowedEquipment b WHERE b.equipment.available=false")
+    List<BorrowedEquipment> findStillBorrowedEquipment();
 }
