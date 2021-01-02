@@ -102,6 +102,9 @@ public class ContractController {
                 bindingResult.addError(error);
             }
         }
+
+
+
         if (bindingResult.hasErrors()){
             model.addAttribute("borrowedEquipment", borrowedEquipment);
             return "borrowedEquipment/form";
@@ -150,6 +153,10 @@ public class ContractController {
     @GetMapping("/createCopyOfContract")
     public String createCopyOfContract(){
         Contract contract = contractService.findLastAdded();
+        if(contract.getBorrowedEquipmentList().size() == 0){
+            contractService.delete(contract.getId());
+            return "contract/noEquipmentAdded";
+        }
         CopyOfContract copyOfContract = new CopyOfContract();
         copyOfContract.setContractNumber(contract.getId());
         copyOfContract.setProfit(contract.getProfit());

@@ -11,6 +11,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
      @Query(value = "SELECT * FROM contracts WHERE customer_id=?1", nativeQuery = true)
      List<Contract> findContractsOfCustomer(Long id);
 
+     List<Contract> findByCustomerId(Long id);
      @Query(value = "SELECT * FROM contracts WHERE employee_id=?1", nativeQuery = true)
      List<Contract> findContractsOfEmployee(Long id);
 }
