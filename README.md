@@ -10,7 +10,7 @@ Information is showing in clear way in calendar.
 -Html <br>
 -CSS <br>
 -JSP <br>
-_JSTL <br>
+-JSTL <br>
 -Spring Form <br>
 -Spring Security <br>
 -MySQL
