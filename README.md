@@ -12,5 +12,6 @@ Information is showing in clear way in calendar.
 -JSP <br>
 -JSTL <br>
 -Spring Form <br>
+-Spring Data <br>
 -Spring Security <br>
 -MySQL
