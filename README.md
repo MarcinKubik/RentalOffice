@@ -4,13 +4,13 @@ This stores information about equipment, who has borrowed it and when should be 
 Information is showing in clear way in calendar.
 
 # Technologies
--Java
--Spring Boot
--Hibernate
--Html
--CSS
--JSP
-_JSTL
--Spring Form
--Spring Security
+-Java <br>
+-Spring Boot <br>
+-Hibernate <br>
+-Html <br>
+-CSS <br>
+-JSP <br>
+_JSTL <br>
+-Spring Form <br>
+-Spring Security <br>
 -MySQL
