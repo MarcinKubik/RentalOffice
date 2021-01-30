@@ -38,6 +38,7 @@ public class ContractController {
         this.copyOfContractRepository = copyOfContractRepository;
     }
 
+
     //dodaję pracownika do umowy
     @ModelAttribute("employee")
     public Employee employee(){

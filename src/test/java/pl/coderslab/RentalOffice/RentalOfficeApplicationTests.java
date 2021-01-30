@@ -1,13 +1,30 @@
 package pl.coderslab.RentalOffice;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import pl.coderslab.RentalOffice.controller.StartController;
+import static org.junit.Assert.*;
+
+
 
 @SpringBootTest
-class RentalOfficeApplicationTests {
+public class RentalOfficeApplicationTests {
+
+	//private StartController startController;
+
+
+	public RentalOfficeApplicationTests() {
+	}
+
+	/*@Before
+	public void setup(){
+		startController = new StartController();
+	}*/
 
 	@Test
-	void contextLoads() {
+	public void contextLoads(){
+		//assertTrue(startController != null);
 	}
 
 }
