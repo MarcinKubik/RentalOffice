@@ -8,6 +8,7 @@ import pl.coderslab.RentalOffice.repository.RoleRepository;
 
 import java.util.List;
 
+
 @Controller
 public class StartController {
 
